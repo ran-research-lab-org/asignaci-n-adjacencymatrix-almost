@@ -32,24 +32,48 @@ public:
 
     // Implementar!! 
     // Devuelve la cantidad de aristas
+    //Recorre la matriz en busca de 1 (alternativamente se puede agregar un data member que incremente cada vez que se agregue un edge, but that aint the point, right?)
     int numEdges() const {
-        return 0;
-    }
+        int edgeCount = 0;
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = 0; j < numVertices; ++j) {
+                if (adjMatrix[i][j] == 1)edgeCount++;
+                }
+            }
+        return edgeCount;
+}
 
     // Completa esta función
     // Devuelve el in-degree de un vertice
+    //Recorre los edges en la columna u y los cuenta
     int inDegree(int u) const {
+
+        int inCount = 0;
         if (u < 0 || u >= numVertices)
             throw std::out_of_range("Vertice fuera de rango");
         else {
+            for (int i = 0; i < numVertices; i++)
+            {
+                if (adjMatrix[i][u] == 1) inCount++;
+            }
         }
+        return inCount;
     }
 
     // Completa esta función
     // Devuelve cierto si u es el nodo con mayor inDegree.
     // En caso de que haya varios nodos que tengan el mayor inDegree,
     // devuelve true si u es uno de ellos
-    bool isInfluencer(int u) const  {
+    //May I return a string? :(
+    bool isInfluencer(int u) const{
+        int popularity_poll = inDegree(u);
+        for (int i = 0; i < numVertices; i++)
+        {
+            if (i == u){ }
+            if (inDegree(i) > popularity_poll) return false;
+        }
+
+        return true;
     }
 };
 
